@@ -48,283 +48,271 @@
  */
 
 #if !defined(CUSOLVERMG_H_)
-#define CUSOLVERMG_H_
+  #define CUSOLVERMG_H_
 
-#include <stdint.h>
-#include "cusolverDn.h"
+  #include <stdint.h>
+  #include "cusolverDn.h"
 
-
-#if defined(__cplusplus)
+  #if defined(__cplusplus)
 extern "C" {
-#endif /* __cplusplus */
+  #endif /* __cplusplus */
 
-struct cusolverMgContext;
-typedef struct cusolverMgContext *cusolverMgHandle_t;
+  struct cusolverMgContext;
+  typedef struct cusolverMgContext *cusolverMgHandle_t;
 
+  /**
+   * \beief This enum decides how 1D device Ids (or process ranks) get mapped to
+   * a 2D grid.
+   */
+  typedef enum {
 
-/**
- * \beief This enum decides how 1D device Ids (or process ranks) get mapped to a 2D grid.
- */
-typedef enum {
+    CUDALIBMG_GRID_MAPPING_ROW_MAJOR = 1,
+    CUDALIBMG_GRID_MAPPING_COL_MAJOR = 0
 
-  CUDALIBMG_GRID_MAPPING_ROW_MAJOR = 1,
-  CUDALIBMG_GRID_MAPPING_COL_MAJOR = 0
+  } cusolverMgGridMapping_t;
 
-} cusolverMgGridMapping_t;
+  /** \brief Opaque structure of the distributed grid */
+  typedef void *cudaLibMgGrid_t;
+  /** \brief Opaque structure of the distributed matrix descriptor */
+  typedef void *cudaLibMgMatrixDesc_t;
 
-/** \brief Opaque structure of the distributed grid */
-typedef void * cudaLibMgGrid_t;
-/** \brief Opaque structure of the distributed matrix descriptor */
-typedef void * cudaLibMgMatrixDesc_t;
+  cusolverStatus_t CUSOLVERAPI cusolverMgCreate(cusolverMgHandle_t *handle);
 
+  cusolverStatus_t CUSOLVERAPI cusolverMgDestroy(cusolverMgHandle_t handle);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgCreate(
-    cusolverMgHandle_t *handle);
-
-cusolverStatus_t CUSOLVERAPI cusolverMgDestroy(
-    cusolverMgHandle_t handle);
-
-cusolverStatus_t CUSOLVERAPI cusolverMgDeviceSelect(
+  cusolverStatus_t CUSOLVERAPI cusolverMgDeviceSelect(
     cusolverMgHandle_t handle,
-    int nbDevices,
-    int deviceId[]);
+    int                nbDevices,
+    int                deviceId[]);
 
-
-/**
- * \brief Allocates resources related to the shared memory device grid.
- * \param[out] grid the opaque data strcuture that holds the grid
- * \param[in] numRowDevices number of devices in the row
- * \param[in] numColDevices number of devices in the column
- * \param[in] deviceId This array of size height * width stores the
- *            device-ids of the 2D grid; each entry must correspond to a valid gpu or to -1 (denoting CPU).
- * \param[in] mapping whether the 2D grid is in row/column major
- * \returns the status code
- */
-cusolverStatus_t CUSOLVERAPI cusolverMgCreateDeviceGrid(
-    cudaLibMgGrid_t* grid, 
-    int32_t numRowDevices, 
-    int32_t numColDevices,
-    const int32_t deviceId[], 
+  /**
+   * \brief Allocates resources related to the shared memory device grid.
+   * \param[out] grid the opaque data strcuture that holds the grid
+   * \param[in] numRowDevices number of devices in the row
+   * \param[in] numColDevices number of devices in the column
+   * \param[in] deviceId This array of size height * width stores the
+   *            device-ids of the 2D grid; each entry must correspond to a valid
+   * gpu or to -1 (denoting CPU). \param[in] mapping whether the 2D grid is in
+   * row/column major \returns the status code
+   */
+  cusolverStatus_t CUSOLVERAPI cusolverMgCreateDeviceGrid(
+    cudaLibMgGrid_t *       grid,
+    int32_t                 numRowDevices,
+    int32_t                 numColDevices,
+    const int32_t           deviceId[],
     cusolverMgGridMapping_t mapping);
 
-/**
- * \brief Releases the allocated resources related to the distributed grid.
- * \param[in] grid the opaque data strcuture that holds the distributed grid
- * \returns the status code
- */
-cusolverStatus_t CUSOLVERAPI cusolverMgDestroyGrid(
-    cudaLibMgGrid_t grid);
+  /**
+   * \brief Releases the allocated resources related to the distributed grid.
+   * \param[in] grid the opaque data strcuture that holds the distributed grid
+   * \returns the status code
+   */
+  cusolverStatus_t CUSOLVERAPI cusolverMgDestroyGrid(cudaLibMgGrid_t grid);
 
-/**
- * \brief Allocates resources related to the distributed matrix descriptor.
- * \param[out] desc the opaque data strcuture that holds the descriptor
- * \param[in] numRows number of total rows
- * \param[in] numCols number of total columns
- * \param[in] rowBlockSize row block size
- * \param[in] colBlockSize column block size
- * \param[in] dataType the data type of each element in cudaDataType
- * \param[in] grid the opaque data structure of the distributed grid
- * \returns the status code
- */
-cusolverStatus_t CUSOLVERAPI cusolverMgCreateMatrixDesc(
-    cudaLibMgMatrixDesc_t * desc,
-    int64_t numRows, 
-    int64_t numCols, 
-    int64_t rowBlockSize, 
-    int64_t colBlockSize,
-    cudaDataType dataType, 
-    const cudaLibMgGrid_t grid);
+  /**
+   * \brief Allocates resources related to the distributed matrix descriptor.
+   * \param[out] desc the opaque data strcuture that holds the descriptor
+   * \param[in] numRows number of total rows
+   * \param[in] numCols number of total columns
+   * \param[in] rowBlockSize row block size
+   * \param[in] colBlockSize column block size
+   * \param[in] dataType the data type of each element in cudaDataType
+   * \param[in] grid the opaque data structure of the distributed grid
+   * \returns the status code
+   */
+  cusolverStatus_t CUSOLVERAPI cusolverMgCreateMatrixDesc(
+    cudaLibMgMatrixDesc_t *desc,
+    int64_t                numRows,
+    int64_t                numCols,
+    int64_t                rowBlockSize,
+    int64_t                colBlockSize,
+    cudaDataType           dataType,
+    const cudaLibMgGrid_t  grid);
 
-/**
- * \brief Releases the allocated resources related to the distributed matrix descriptor.
- * \param[in] desc the opaque data strcuture that holds the descriptor
- * \returns the status code
- */
-cusolverStatus_t CUSOLVERAPI cusolverMgDestroyMatrixDesc(
-    cudaLibMgMatrixDesc_t desc);
+  /**
+   * \brief Releases the allocated resources related to the distributed matrix
+   * descriptor. \param[in] desc the opaque data strcuture that holds the
+   * descriptor \returns the status code
+   */
+  cusolverStatus_t CUSOLVERAPI
+    cusolverMgDestroyMatrixDesc(cudaLibMgMatrixDesc_t desc);
 
-
-
-cusolverStatus_t CUSOLVERAPI cusolverMgSyevd_bufferSize(
-    cusolverMgHandle_t handle,
-    cusolverEigMode_t jobz, 
-    cublasFillMode_t uplo, 
-    int N,
-    void *array_d_A[], 
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgSyevd_bufferSize(
+    cusolverMgHandle_t    handle,
+    cusolverEigMode_t     jobz,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    void *W,
-    cudaDataType dataTypeW,
-    cudaDataType computeType,
-    int64_t *lwork);
+    void *                W,
+    cudaDataType          dataTypeW,
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgSyevd(
-    cusolverMgHandle_t handle,
-    cusolverEigMode_t jobz,
-    cublasFillMode_t uplo,
-    int N,
-    void *array_d_A[],
-    int IA,
-    int JA,
+  cusolverStatus_t CUSOLVERAPI cusolverMgSyevd(
+    cusolverMgHandle_t    handle,
+    cusolverEigMode_t     jobz,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    void *W,
-    cudaDataType dataTypeW,
-    cudaDataType computeType,
-    void *array_d_work[],
-    int64_t lwork,
-    int *info );
+    void *                W,
+    cudaDataType          dataTypeW,
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 info);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgGetrf_bufferSize(
-    cusolverMgHandle_t handle,
-    int M,
-    int N,
-    void *array_d_A[],
-    int IA,
-    int JA,
+  cusolverStatus_t CUSOLVERAPI cusolverMgGetrf_bufferSize(
+    cusolverMgHandle_t    handle,
+    int                   M,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    int *array_d_IPIV[],
-    cudaDataType computeType,
-    int64_t *lwork);
+    int *                 array_d_IPIV[],
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgGetrf(
-    cusolverMgHandle_t handle,
-    int M,
-    int N,
-    void *array_d_A[],
-    int IA,
-    int JA,
+  cusolverStatus_t CUSOLVERAPI cusolverMgGetrf(
+    cusolverMgHandle_t    handle,
+    int                   M,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    int *array_d_IPIV[],
-    cudaDataType computeType,
-    void *array_d_work[],
-    int64_t lwork,
-    int *info );
+    int *                 array_d_IPIV[],
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 info);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgGetrs_bufferSize(
-    cusolverMgHandle_t handle,
-    cublasOperation_t TRANS,
-    int N,
-    int NRHS,
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgGetrs_bufferSize(
+    cusolverMgHandle_t    handle,
+    cublasOperation_t     TRANS,
+    int                   N,
+    int                   NRHS,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    int *array_d_IPIV[],  
-    void *array_d_B[],
-    int IB, 
-    int JB, 
+    int *                 array_d_IPIV[],
+    void *                array_d_B[],
+    int                   IB,
+    int                   JB,
     cudaLibMgMatrixDesc_t descrB,
-    cudaDataType computeType,
-    int64_t *lwork);
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgGetrs(
-    cusolverMgHandle_t handle,
-    cublasOperation_t TRANS,
-    int N,
-    int NRHS,
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgGetrs(
+    cusolverMgHandle_t    handle,
+    cublasOperation_t     TRANS,
+    int                   N,
+    int                   NRHS,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    int *array_d_IPIV[], 
-    void *array_d_B[],
-    int IB, 
-    int JB, 
+    int *                 array_d_IPIV[],
+    void *                array_d_B[],
+    int                   IB,
+    int                   JB,
     cudaLibMgMatrixDesc_t descrB,
-    cudaDataType computeType,
-    void *array_d_work[],
-    int64_t lwork,
-    int *info );
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 info);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotrf_bufferSize( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int N, 
-    void *array_d_A[],
-    int IA,
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotrf_bufferSize(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    cudaDataType computeType, 
-	int64_t *lwork);
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotrf( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int N, 
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotrf(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    cudaDataType computeType, 
-    void *array_d_work[],
-    int64_t lwork,
-    int *h_info);
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 h_info);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotrs_bufferSize( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int n, 
-	int nrhs,
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotrs_bufferSize(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   n,
+    int                   nrhs,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    void *array_d_B[],
-    int IB, 
-    int JB, 
+    void *                array_d_B[],
+    int                   IB,
+    int                   JB,
     cudaLibMgMatrixDesc_t descrB,
-    cudaDataType computeType, 
-	int64_t *lwork );
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotrs( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int n, 
-	int nrhs,
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotrs(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   n,
+    int                   nrhs,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    void *array_d_B[],
-    int IB, 
-    int JB, 
+    void *                array_d_B[],
+    int                   IB,
+    int                   JB,
     cudaLibMgMatrixDesc_t descrB,
-    cudaDataType computeType, 
-    void *array_d_work[],
-	int64_t lwork,
-	int *h_info);
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 h_info);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotri_bufferSize( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int N, 
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotri_bufferSize(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    cudaDataType computeType, 
-	int64_t *lwork);
+    cudaDataType          computeType,
+    int64_t *             lwork);
 
-cusolverStatus_t CUSOLVERAPI cusolverMgPotri( 
-    cusolverMgHandle_t handle,
-	cublasFillMode_t uplo,
-    int N, 
-    void *array_d_A[],
-    int IA, 
-    int JA, 
+  cusolverStatus_t CUSOLVERAPI cusolverMgPotri(
+    cusolverMgHandle_t    handle,
+    cublasFillMode_t      uplo,
+    int                   N,
+    void *                array_d_A[],
+    int                   IA,
+    int                   JA,
     cudaLibMgMatrixDesc_t descrA,
-    cudaDataType computeType, 
-    void *array_d_work[],
-	int64_t lwork,
-    int *h_info);
+    cudaDataType          computeType,
+    void *                array_d_work[],
+    int64_t               lwork,
+    int *                 h_info);
 
-
-
-#if defined(__cplusplus)
+  #if defined(__cplusplus)
 }
-#endif /* __cplusplus */
+  #endif /* __cplusplus */
 
 #endif // CUSOLVERMG_H_
- 
-

@@ -571,9 +571,9 @@ nvrtcResult nvrtcGetLoweredName(nvrtcProgram prog,
  *       to the include path. This option disables this feature and only
  *       considers the path specified explicitly.
  *   - Language Dialect
- *     - \c --std={c++03|c++11|c++14|c++17|c++20}
- *       (\c -std={c++11|c++14|c++17|c++20})\n
- *       Set language dialect to C++03, C++11, C++14, C++17 or C++20
+ *     - \c --std={c++03|c++11|c++14|c++17}
+ *       (\c -std={c++11|c++14|c++17})\n
+ *       Set language dialect to C++03, C++11, C++14 or C++17
  *     - \c --builtin-move-forward={true|false} (\c -builtin-move-forward)\n
  *       Provide builtin definitions of \c std::move and \c std::forward,
  *       when C++11 language dialect is selected.

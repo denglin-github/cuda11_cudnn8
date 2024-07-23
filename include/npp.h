@@ -56,8 +56,8 @@
 
 #define NPP_VER_MAJOR 11
 #define NPP_VER_MINOR 7
-#define NPP_VER_PATCH 3
-#define NPP_VER_BUILD 21
+#define NPP_VER_PATCH 4
+#define NPP_VER_BUILD 75
 
 #define NPP_VERSION (NPP_VER_MAJOR * 1000 +     \
                      NPP_VER_MINOR *  100 +     \

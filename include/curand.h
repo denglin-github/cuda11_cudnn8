@@ -74,7 +74,7 @@ extern "C" {
 #define CURAND_VER_MAJOR 10
 #define CURAND_VER_MINOR 2
 #define CURAND_VER_PATCH 10
-#define CURAND_VER_BUILD 50
+#define CURAND_VER_BUILD 91
 #define CURAND_VERSION (CURAND_VER_MAJOR * 1000 + \
                         CURAND_VER_MINOR *  100 + \
                         CURAND_VER_PATCH)

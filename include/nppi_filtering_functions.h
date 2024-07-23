@@ -1,4 +1,4 @@
- /* Copyright 2009-2021 NVIDIA CORPORATION & AFFILIATES.  All rights reserved. 
+ /* Copyright 2009-2022 NVIDIA CORPORATION & AFFILIATES.  All rights reserved. 
   * 
   * NOTICE TO LICENSEE: 
   * 
@@ -12,7 +12,7 @@
   * between NVIDIA and Licensee ("License Agreement") or electronically 
   * accepted by Licensee.  Notwithstanding any terms or conditions to 
   * the contrary in the License Agreement, reproduction or disclosure 
-  * of the Licensed Deliverables to any third party without the express 
+  * of the Licensed Deliverables to any third party without the express
   * written consent of NVIDIA is prohibited. 
   * 
   * NOTWITHSTANDING ANY TERMS OR CONDITIONS TO THE CONTRARY IN THE 
@@ -6578,6 +6578,349 @@ NppStatus
 nppiFilterMedianGetBufferSize_32f_AC4R(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize);
 
 /** @} image_filter_median */
+
+/** @defgroup image_filter_median_border FilterMedianBorder
+ * Result pixel value is the median of pixel values under the rectangular mask region.
+ *
+ * <h3><a name="CommonFilterMedianBorderParameters">Common parameters for nppiFilterMedianBorder functions include:</a></h3>
+ *
+ * \param pSrc \ref source_image_pointer.
+ * \param nSrcStep \ref source_image_line_step.
+ * \param pDst \ref destination_image_pointer.
+ * \param nDstStep \ref destination_image_line_step.
+ * \param oSizeROI \ref roi_specification.
+ * \param oMaskSize Width and Height of the neighborhood region for the local
+ *        Median operation.
+ * \param oAnchor X and Y offsets of the kernel origin frame of reference
+ *        relative to the source pixel.
+ * \param pBuffer Pointer to the user-allocated scratch buffer required for the Median operation.
+ * \param eBorderType The border type operation to be applied at source image border boundaries.
+ * \param nppStreamCtx \ref application_managed_stream_context.
+ * \return \ref image_data_error_codes, \ref roi_error_codes
+ *
+ * <h3><a name="CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions include:</a></h3>
+ *
+ * \param oSizeROI \ref roi_specification.
+ * \param oMaskSize Width and Height of the neighborhood region for the local Median operation.
+ * \param nBufferSize Pointer to the size of the scratch buffer required for the Median operation.
+ * \return \ref image_data_error_codes
+ *
+ * @{
+ *
+ */
+
+ /**
+  * Single channel 8-bit unsigned median filter.
+  *
+  * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+  *
+  */
+
+NppStatus
+nppiFilterMedianBorder_8u_C1R_Ctx(const Npp8u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp8u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Three channel 8-bit unsigned median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_8u_C3R_Ctx(const Npp8u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp8u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Four channel 8-bit unsigned median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_8u_C4R_Ctx(const Npp8u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp8u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 8-bit unsigned median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_8u_AC4R_Ctx(const Npp8u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp8u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Single channel 16-bit unsigned median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16u_C1R_Ctx(const Npp16u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 16-bit unsigned median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16u_C3R_Ctx(const Npp16u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit unsigned median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16u_C4R_Ctx(const Npp16u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit unsigned median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16u_AC4R_Ctx(const Npp16u * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16u * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Single channel 16-bit signed median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16s_C1R_Ctx(const Npp16s * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16s * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 16-bit signed median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16s_C3R_Ctx(const Npp16s * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16s * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit signed median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16s_C4R_Ctx(const Npp16s * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16s * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit signed median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_16s_AC4R_Ctx(const Npp16s * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp16s * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Single channel 32-bit floating-point median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_32f_C1R_Ctx(const Npp32f * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp32f * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 32-bit floating-point median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_32f_C3R_Ctx(const Npp32f * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp32f * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 32-bit floating-point median filter.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_32f_C4R_Ctx(const Npp32f * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp32f * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 32-bit floating-point median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianParameters">Common parameters for nppiFilterMedian functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorder_32f_AC4R_Ctx(const Npp32f * pSrc, Npp32s nSrcStep, NppiSize oSrcSize, NppiPoint oSrcOffset, Npp32f * pDst, Npp32s nDstStep, NppiSize oSizeROI,
+    NppiSize oMaskSize, NppiPoint oAnchor, Npp8u * pBuffer, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Single channel 8-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_8u_C1R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 8-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_8u_C3R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 8-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_8u_C4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 8-bit unsigned median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_8u_AC4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Single channel 16-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16u_C1R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 16-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16u_C3R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Four channel 16-bit unsigned median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16u_C4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit unsigned median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16u_AC4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Single channel 16-bit signed median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16s_C1R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 16-bit signed median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16s_C3R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit signed median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16s_C4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 16-bit signed median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_16s_AC4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+
+/**
+ * Single channel 32-bit floating-point median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_32f_C1R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Three channel 32-bit floating-point median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_32f_C3R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 32-bit floating-point median filter scratch memory size.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_32f_C4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/**
+ * Four channel 32-bit floating-point median filter, ignoring alpha channel.
+ *
+ * For common parameter descriptions, see <a href="#CommonFilterMedianBorderGetBufferSizeParameters">Common parameters for nppiFilterMedianBorderGetBufferSize functions</a>.
+ *
+ */
+NppStatus
+nppiFilterMedianBorderGetBufferSize_32f_AC4R_Ctx(NppiSize oSizeROI, NppiSize oMaskSize, Npp32u * nBufferSize, NppiBorderType eBorderType, NppStreamContext nppStreamCtx);
+
+/** @} image_filter_median_border */
 
 /** @} image_rank_filters */
 
@@ -13328,7 +13671,13 @@ nppiFilterUnsharpGetBufferSize_32f_AC4R(const Npp32f nRadius, const Npp32f nSigm
  * Noise removal filtering of an image using an adaptive Wiener filter with border control.
  *
  * Pixels under the source mask are used to generate statistics about the local neighborhood 
- * which are then used to control the amount of adaptive noise filtering locally applied.
+ * which are then used to control the amount of adaptive noise filtering locally applied. 
+ *  
+ * Note that if the noise value for a particular channel is set to 0.0f then the output for that channel will contain the 
+ * square of the variance of local pixels within aMaskSize surrounding each pixel in oSizeROI. Note that is unlikely to be useful unless 
+ * the pixel data type is floating point due to result clamping.  Output from these cases can then be passed through an nppiMean function call 
+ * using the same oSizeROI.  The square root for that channel from the nppiMean call result can then be used as a noise value for a future 
+ * call to this function if there is no known preexisting noise value. 
  *
  * Currently only the NPP_BORDER_REPLICATE border type operation is supported.
  *
@@ -16336,7 +16685,7 @@ nppiFloodFillBoundary_32u_C3IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint oSee
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification. 
@@ -16365,7 +16714,7 @@ nppiFloodFillRange_8u_C1IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16394,7 +16743,7 @@ nppiFloodFillRange_8u_C3IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16423,7 +16772,7 @@ nppiFloodFillRange_16u_C1IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16452,7 +16801,7 @@ nppiFloodFillRange_16u_C3IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16481,7 +16830,7 @@ nppiFloodFillRange_32u_C1IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16531,7 +16880,7 @@ nppiFloodFillRange_32u_C3IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16561,7 +16910,7 @@ nppiFloodFillRangeBoundary_8u_C1IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint o
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16591,7 +16940,7 @@ nppiFloodFillRangeBoundary_8u_C3IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint o
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16621,7 +16970,7 @@ nppiFloodFillRangeBoundary_16u_C1IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16651,7 +17000,7 @@ nppiFloodFillRangeBoundary_16u_C3IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= this value. 
- * \param nMax Valeu of tested pixel must be <= this value. 
+ * \param nMax Value of tested pixel must be <= this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16681,7 +17030,7 @@ nppiFloodFillRangeBoundary_32u_C1IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16733,7 +17082,7 @@ nppiFloodFillRangeBoundary_32u_C3IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification. 
@@ -16758,7 +17107,7 @@ nppiFloodFillGradient_8u_C1IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16783,7 +17132,7 @@ nppiFloodFillGradient_8u_C3IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoint oSeed,
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16808,7 +17157,7 @@ nppiFloodFillGradient_16u_C1IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint oSee
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16833,7 +17182,7 @@ nppiFloodFillGradient_16u_C3IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPoint oSee
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16858,7 +17207,7 @@ nppiFloodFillGradient_32u_C1IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint oSee
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
  * \param oSizeROI \ref roi_specification.
@@ -16906,7 +17255,7 @@ nppiFloodFillGradient_32u_C3IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPoint oSee
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16936,7 +17285,7 @@ nppiFloodFillGradientBoundary_8u_C1IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoin
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16966,7 +17315,7 @@ nppiFloodFillGradientBoundary_8u_C3IR(Npp8u * pSrcDst, int nSrcDstStep, NppiPoin
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -16996,7 +17345,7 @@ nppiFloodFillGradientBoundary_16u_C1IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPo
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -17026,7 +17375,7 @@ nppiFloodFillGradientBoundary_16u_C3IR(Npp16u * pSrcDst, int nSrcDstStep, NppiPo
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param nMin Value of tested pixel must be >= seed value - this value. 
- * \param nMax Valeu of tested pixel must be <= seed value + this value. 
+ * \param nMax Value of tested pixel must be <= seed value + this value. 
  * \param nNewValue Image pixel value to be used to replace matching pixels. 
  * \param nBoundaryValue Image pixel value to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 
@@ -17056,7 +17405,7 @@ nppiFloodFillGradientBoundary_32u_C1IR(Npp32u * pSrcDst, int nSrcDstStep, NppiPo
  * \param nSrcDstStep \ref in_place_image_line_step in bytes. 
  * \param oSeed Image location of seed pixel value to be used for comparison. 
  * \param aMin Value of each element of tested pixel must be >= the corresponding seed value - aMin value. 
- * \param aMax Valeu of each element of tested pixel must be <= the corresponding seed value + aMax value. 
+ * \param aMax Value of each element of tested pixel must be <= the corresponding seed value + aMax value. 
  * \param aNewValues Image pixel values to be used to replace matching pixels. 
  * \param aBoundaryValues Image pixel values to be used for region boundary. 
  * \param eNorm Type of pixel connectivity test to use, nppiNormInf will use 8 way connectivity and nppiNormL1 will use 4 way connectivity. 

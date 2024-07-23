@@ -62,8 +62,8 @@
 
 #define CUSPARSE_VER_MAJOR 11
 #define CUSPARSE_VER_MINOR 7
-#define CUSPARSE_VER_PATCH 3
-#define CUSPARSE_VER_BUILD 50
+#define CUSPARSE_VER_PATCH 4
+#define CUSPARSE_VER_BUILD 91
 #define CUSPARSE_VERSION (CUSPARSE_VER_MAJOR * 1000 + \
                           CUSPARSE_VER_MINOR *  100 + \
                           CUSPARSE_VER_PATCH)

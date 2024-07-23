@@ -76,7 +76,7 @@ extern "C" {
 #define CUFFT_VER_MAJOR 10
 #define CUFFT_VER_MINOR 7
 #define CUFFT_VER_PATCH 2
-#define CUFFT_VER_BUILD 50
+#define CUFFT_VER_BUILD 91
 
 // cuFFT library version
 //
