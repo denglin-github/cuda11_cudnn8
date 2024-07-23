@@ -57,10 +57,6 @@
 #if !defined(CUBLAS_H_)
 #define CUBLAS_H_
 
-#if defined(CUBLAS_V2_H_)
-#error "It is an error to include both cublas.h and cublas_v2.h"
-#endif
-
 #include <cuda_runtime.h>
 
 #ifndef CUBLASWINAPI
